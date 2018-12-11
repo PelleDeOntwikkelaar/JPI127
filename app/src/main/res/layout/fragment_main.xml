@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/search_container"
+        android:layout_width="0dp"
+        android:layout_height="218dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="32dp"
+        android:visibility="visible"
+        android:background="@drawable/layout_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_min="218dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:elevation="8dp"
+        tools:layout_constraintHeight_default="218dp"
+        tools:layout_constraintHeight_max="218dp"
+        tools:layout_constraintHeight_min="218dp"
+        tools:layout_height="218dp">
+
+        <TextView
+            android:id="@+id/textView_search_title"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:gravity="center_vertical"
+            android:text="New Search "
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@color/lightGray"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/text_view_station"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/activity_half_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/activity_half_horizontal_margin"
+            android:gravity="center_vertical"
+            android:text=" Choose a station please:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_search_title"
+            tools:layout_marginTop="16dp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView_input_station_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_half_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/activity_half_horizontal_margin"
+            android:text="Stations"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_station" />
+
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="@dimen/activity_half_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/activity_half_horizontal_margin"
+            android:text="Search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_input_station_name"
+            tools:layout_marginBottom="16dp"
+            tools:layout_marginTop="16dp"
+            android:textColor="@color/colorAccent" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

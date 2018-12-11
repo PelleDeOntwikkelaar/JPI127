@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">JPI127</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title_activity_project">Project Activity</string>
+
+
+
+    <string name="new_search_menu_item">New Search</string>
+    <string name="personal_favorites_menu_item">Personal Favorites</string>
+    <string name="tracked_stations_menu_item">Tracked Stations</string>
+    <string name="info_menu_item">Info</string>
+    <string name="buttonStart">Start</string>
+    <string name="buttonStop">Stop</string>
+    <string name="buttonTerug">Terug</string>
+    <string name="buttonSend">Send</string>
+    <string name="defaultName">Android Studio</string>
+    <string name="defaultName2">Das niet ingelogd he manneke</string>
+    <string name="defaultEmail">android.studio@android.com</string>
+    <string name="userName">userName</string>
+    <string name="userID">userId</string>
+    <string name="title_activity_project2">Map</string>
+    <string name="MetingenTitleProjectOverview"> Measurements </string>
+
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Log in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+
+
+
+    !-- Strings related to facebook login connectivity -->
+    <string name="facebook_app_id">2187014571310622</string>
+    <string name="facebook_login_protocol_scheme">fb2187014571310622</string>
+
+
+</resources>
