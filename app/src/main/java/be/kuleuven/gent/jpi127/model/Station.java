@@ -1,4 +1,4 @@
-package be.kuleuven.gent.jpi127.support;
+package be.kuleuven.gent.jpi127.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -36,6 +36,14 @@ public class Station implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     @Override

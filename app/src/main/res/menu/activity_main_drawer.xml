@@ -5,15 +5,15 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/NieuweMetingenMI"
+            android:id="@+id/NewSearchMI"
             android:icon="@drawable/bridge"
             android:title="@string/new_search_menu_item" />
         <item
-            android:id="@+id/EigenMetingenMI"
+            android:id="@+id/FavoritesMI"
             android:icon="@drawable/bridge"
             android:title="@string/personal_favorites_menu_item" />
         <item
-            android:id="@+id/ProjectenMI"
+            android:id="@+id/TrackedMI"
             android:icon="@drawable/bridge"
             android:title="@string/tracked_stations_menu_item" />
         <item

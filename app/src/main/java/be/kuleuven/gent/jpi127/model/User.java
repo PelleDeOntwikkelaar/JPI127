@@ -1,4 +1,4 @@
-package be.kuleuven.gent.jpi127.support;
+package be.kuleuven.gent.jpi127.model;
 
 public class User {
     long id;

@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
  * @author Pelle Reyniers
  */
 public interface VolleyResponseListener {
+
     /**
      * Method called when request is started.
      */

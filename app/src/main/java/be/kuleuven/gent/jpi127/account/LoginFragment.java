@@ -6,8 +6,6 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,23 +43,19 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
 import be.kuleuven.gent.jpi127.MainActivity;
 import be.kuleuven.gent.jpi127.R;
 import be.kuleuven.gent.jpi127.general.fragments.MainFragment;
 import be.kuleuven.gent.jpi127.support.Encryptie;
-import be.kuleuven.gent.jpi127.support.Token;
-import be.kuleuven.gent.jpi127.support.User;
+import be.kuleuven.gent.jpi127.model.Token;
+import be.kuleuven.gent.jpi127.model.User;
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.text.ParseException;

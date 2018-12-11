@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.google.gson.Gson;
@@ -33,8 +34,12 @@ import java.security.NoSuchAlgorithmException;
 
 import be.kuleuven.gent.jpi127.account.AccountSettingsFragment;
 import be.kuleuven.gent.jpi127.account.LoginFragment;
+import be.kuleuven.gent.jpi127.general.fragments.FavoritesFragment;
+import be.kuleuven.gent.jpi127.general.fragments.InfoFragment;
 import be.kuleuven.gent.jpi127.general.fragments.MainFragment;
-import be.kuleuven.gent.jpi127.support.User;
+import be.kuleuven.gent.jpi127.general.fragments.OnlineFragment;
+import be.kuleuven.gent.jpi127.general.fragments.TrackedFragment;
+import be.kuleuven.gent.jpi127.model.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         sharedPref = getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         //TODO: set dedicated ip and port number
-        editor.putString("url","http://10.108.17.188:2003/rail4you");
+        editor.putString("url","http://192.168.10.101:2003/rail4you");
         editor.commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
@@ -140,8 +145,8 @@ public class MainActivity extends AppCompatActivity
 
 
         //default start up frament is nieuwe meting.
-        //int id = sharedPref.getInt("lastUsedFragment",R.id.mai);
-        fragment= chooseFragment();
+        int id = sharedPref.getInt("lastUsedFragment",R.id.NewSearchMI);
+        fragment= chooseFragment(id);
         changeFragment();
 
         callbackManager = CallbackManager.Factory.create();
@@ -219,7 +224,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        fragment=chooseFragment();
+        fragment=chooseFragment(id);
 
         if(fragment!=null){
             changeFragment();
@@ -234,22 +239,22 @@ public class MainActivity extends AppCompatActivity
      * Method used to translate the id given as new selected option into the right fragment.
      * @return The corresponding fragment is returned.
      */
-    public Fragment chooseFragment(){
+    public Fragment chooseFragment(int id){
         Fragment fragment=new MainFragment();
-        /*
-        if (id == R.id.NieuweMetingenMI) {
+
+        if (id == R.id.NewSearchMI) {
             fragment = new MainFragment();
 
-        } else if (id == R.id.EigenMetingenMI) {
+        } else if (id == R.id.FavoritesMI) {
             if (sharedPref.contains("user")){
-                fragment = new EigenMetingenListFragment();
+                fragment = new FavoritesFragment();
             } else {
                 Toast.makeText(this, "Please log in first.", Toast.LENGTH_LONG).show();
                 fragment = new LoginFragment();
             }
 
         } else if (id == R.id.ProjectenMI) {
-            fragment = new ProjectenListFragment();
+            fragment = new TrackedFragment();
 
         } else if (id == R.id.SettingsMI) {
             fragment=new AccountSettingsFragment();
@@ -263,7 +268,7 @@ public class MainActivity extends AppCompatActivity
         } else{
             fragment=null;
         }
-        */
+
         return fragment;
     }
 

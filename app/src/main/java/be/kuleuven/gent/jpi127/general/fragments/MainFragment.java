@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.CallbackManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import be.kuleuven.gent.jpi127.R;
-import be.kuleuven.gent.jpi127.support.Station;
+import be.kuleuven.gent.jpi127.model.Station;
 import be.kuleuven.gent.jpi127.support.VolleyResponseListener;
 
 public class MainFragment extends Fragment implements VolleyResponseListener {
@@ -151,7 +149,8 @@ public class MainFragment extends Fragment implements VolleyResponseListener {
     private void performSearch(Station selectedStation) {
         if(selectedStation!=null){
             FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-            Fragment fragment=new MainFragment();
+            Fragment fragment=new StationFragment();
+            ((StationFragment) fragment).setCredentials(selectedStation);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.screen_area,fragment);
             fragmentTransaction.commit();
