@@ -17,14 +17,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import be.kuleuven.gent.jpi127.R;
 import be.kuleuven.gent.jpi127.model.Station;
+import be.kuleuven.gent.jpi127.support.StationAdapter;
+import be.kuleuven.gent.jpi127.support.TrainAdapter;
 import be.kuleuven.gent.jpi127.support.VolleyResponseListener;
 
 public class FavoritesFragment  extends Fragment implements VolleyResponseListener {
@@ -38,6 +46,9 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
     private SharedPreferences sharedPref;
     private String baseUrl;
     private String url;
+    private ArrayList<String>stationCodes;
+    private int volleyNumber;
+    final ProgressDialog progressDialog= new ProgressDialog(getContext());
 
     @Nullable
     @Override
@@ -54,7 +65,7 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
 
         sharedPref = getActivity().getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("lastUsedFragment",R.id.EigenMetingenMI);
+        editor.putInt("lastUsedFragment",R.id.FavoritesMI);
         editor.commit();
         StringBuilder urlBuilder = new StringBuilder();
 
@@ -69,17 +80,41 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         stations= new ArrayList<>();
-
+        stationCodes=new ArrayList<>();
         loadRecyclerView();
+
 
     }
 
     private void loadRecyclerView() {
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading data...");
         progressDialog.show();
         requestStarted();
+        volleyNumber=1;
 
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        requestCompleted(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(),volleyError.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void loadStations() {
+        volleyNumber=2;
+        url = baseUrl.concat("/getStations");
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 url,
                 new Response.Listener<String>() {
@@ -96,6 +131,9 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
                         Toast.makeText(getContext(),volleyError.getMessage(),Toast.LENGTH_LONG).show();
                     }
                 });
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
     }
 
     @Override
@@ -109,7 +147,36 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
         Log.d(TAG, "requestCompleted: url: " + url);
         //todo: afhandelen van de JSON logica en aanspreken van de adapter;
 
+        if(volleyNumber==1){
+            try {
+                JSONArray jsonArray=new JSONArray(response);
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject=jsonArray.getJSONObject(i);
+                    stationCodes.add(jsonObject.getString("station_uri"));
+                }
+                loadStations();
+                volleyNumber=0;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else if (volleyNumber==2){
+            try {
+                JSONArray jsonArray=new JSONArray(response);
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject=jsonArray.getJSONObject(i);
+                    stations.add(new Station(jsonObject));
+                }
+                adapter = new StationAdapter(stations,context,getActivity().getSupportFragmentManager());
+                recyclerView.setAdapter(adapter);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
     }
+
 
     @Override
     public void requestEndedWithError(VolleyError error) {
