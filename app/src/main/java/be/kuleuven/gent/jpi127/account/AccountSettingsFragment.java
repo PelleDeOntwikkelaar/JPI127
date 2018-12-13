@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
+import com.facebook.login.LoginManager;
+
 import be.kuleuven.gent.jpi127.R;
 import be.kuleuven.gent.jpi127.general.fragments.MainFragment;
 
@@ -78,6 +80,7 @@ public class AccountSettingsFragment extends Fragment {
                     Log.d(TAG, "onClick: der is dus een userke aanwezig he");
                     boolean loggedin = sharedPreferences.contains("user");
                     Log.d(TAG, "onClick: loggedin: " + loggedin);
+                    LoginManager.getInstance().logOut();
                     Fragment fragment=new MainFragment();
                     FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

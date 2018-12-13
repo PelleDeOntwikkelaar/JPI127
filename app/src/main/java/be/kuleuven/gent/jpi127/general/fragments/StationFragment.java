@@ -52,7 +52,6 @@ public class StationFragment extends Fragment implements VolleyResponseListener 
 
     private static final String TAG = "StationFragment";
 
-    //todo: edit layout for data analysis.
     private SharedPreferences sharedPref;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
