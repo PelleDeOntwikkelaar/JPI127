@@ -9,6 +9,7 @@ import org.json.JSONObject;
 public class Station implements Parcelable {
     String uri;
     String name;
+    private int totalDelay;
 
     public Station(String name, String uri) {
         this.name = name;
@@ -44,6 +45,14 @@ public class Station implements Parcelable {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public int getTotalDelay() {
+        return totalDelay;
+    }
+
+    public void setTotalDelay(int totalDelay) {
+        this.totalDelay = totalDelay;
     }
 
     @Override

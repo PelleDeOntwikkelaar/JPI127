@@ -13,6 +13,8 @@ import java.util.List;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import org.w3c.dom.Text;
+
 import be.kuleuven.gent.jpi127.R;
 import be.kuleuven.gent.jpi127.model.Train;
 
@@ -61,19 +63,8 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolderPr
 
         holder.textViewHead.setText(train.getDestination());
         holder.textViewDesc.setText(train.getCode());
-
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("train", train);
-                Intent intent = new Intent(context, ProjectActivity.class);
-                intent.putExtra("project", bundle);
-                context.startActivity(intent);
-                */
-            }
-        });
+        holder.textViewDelay.setText(String.valueOf(Integer.parseInt(train.getDelay())/60));
+        holder.textViewPlatform.setText(train.getPlatform() + "  ");
     }
 
     @Override
@@ -90,15 +81,18 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolderPr
 
         public TextView textViewHead;
         public TextView textViewDesc;
+        public TextView textViewDelay;
+        public TextView textViewPlatform;
         public LinearLayout linearLayout;
 
         public ViewHolderProjects(View itemView) {
             super(itemView);
 
-            //todo: add delay and platform fields.
 
             textViewHead = (TextView) itemView.findViewById(R.id.textViewHead);
             textViewDesc = (TextView) itemView.findViewById(R.id.textViewDesc);
+            textViewDelay = (TextView)itemView.findViewById(R.id.textViewDelay);
+            textViewPlatform = (TextView)itemView.findViewById(R.id.textViewPlatform);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayoutTrainCred);
         }
     }

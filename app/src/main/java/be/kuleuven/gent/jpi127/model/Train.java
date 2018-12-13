@@ -6,14 +6,14 @@ import org.json.JSONObject;
 public class Train {
     private String destination;
     private String code;
-    private int platform;
-    private int delay;
+    private String platform;
+    private String delay;
 
 
     public Train() {
     }
 
-    public Train(String destination, String code, int delay, int platform) {
+    public Train(String destination, String code, String delay, String platform) {
         this.destination = destination;
         this.code = code;
         this.delay = delay;
@@ -33,12 +33,16 @@ public class Train {
         try {
             destination=jsonObject.getString("headsign");
             code=jsonObject.getString("routeLabel");
-            platform=jsonObject.getInt("platform");
-            delay=jsonObject.getInt("delay");
+            platform=jsonObject.getString("platform");
+            delay=jsonObject.getString("delay");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public String getPlatform() {
+        return platform;
     }
 
     public String getDestination() {
@@ -57,11 +61,11 @@ public class Train {
         this.code = code;
     }
 
-    public int getDelay() {
+    public String getDelay() {
         return delay;
     }
 
-    public void setDelay(int delay) {
+    public void setDelay(String delay) {
         this.delay = delay;
     }
 }

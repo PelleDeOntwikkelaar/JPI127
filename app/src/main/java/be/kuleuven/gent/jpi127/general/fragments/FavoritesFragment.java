@@ -48,7 +48,6 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
     private String url;
     private ArrayList<String>stationCodes;
     private int volleyNumber;
-    final ProgressDialog progressDialog= new ProgressDialog(getContext());
 
     @Nullable
     @Override
@@ -87,8 +86,7 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
     }
 
     private void loadRecyclerView() {
-        progressDialog.setMessage("Loading data...");
-        progressDialog.show();
+
         requestStarted();
         volleyNumber=1;
 
@@ -104,7 +102,7 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        progressDialog.dismiss();
+
                         Toast.makeText(getContext(),volleyError.getMessage(),Toast.LENGTH_LONG).show();
                     }
                 });
@@ -120,14 +118,14 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        progressDialog.dismiss();
+
                         requestCompleted(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        progressDialog.dismiss();
+
                         Toast.makeText(getContext(),volleyError.getMessage(),Toast.LENGTH_LONG).show();
                     }
                 });
@@ -145,7 +143,6 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
     @Override
     public void requestCompleted(String response) {
         Log.d(TAG, "requestCompleted: url: " + url);
-        //todo: afhandelen van de JSON logica en aanspreken van de adapter;
 
         if(volleyNumber==1){
             try {

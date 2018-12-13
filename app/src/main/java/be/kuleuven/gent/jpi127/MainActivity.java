@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         sharedPref = getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         //TODO: set dedicated ip and port number
-        editor.putString("url","http://192.168.10.101:2003/rail4you");
+        editor.putString("url","http://192.168.10.112:2003/rail4you");
         editor.commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //default start up frament is nieuwe meting.
-        int id = sharedPref.getInt("lastUsedFragment",R.id.NewSearchMI);
+        int id = R.id.NewSearchMI;
         fragment= chooseFragment(id);
         changeFragment();
 
@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity
                 fragment = new LoginFragment();
             }
 
-        } else if (id == R.id.ProjectenMI) {
+        } else if (id == R.id.TrackedMI) {
             fragment = new TrackedFragment();
 
         } else if (id == R.id.SettingsMI) {

@@ -66,13 +66,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 //todo: open station fragment
-                /*
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("train", train);
-                Intent intent = new Intent(context, ProjectActivity.class);
-                intent.putExtra("project", bundle);
-                context.startActivity(intent);
-                */
+
+                //.getContext();
             }
         });
     }

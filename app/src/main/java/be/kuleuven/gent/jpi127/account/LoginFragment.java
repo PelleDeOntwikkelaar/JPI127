@@ -50,6 +50,7 @@ import be.kuleuven.gent.jpi127.general.fragments.MainFragment;
 import be.kuleuven.gent.jpi127.support.Encryptie;
 import be.kuleuven.gent.jpi127.model.Token;
 import be.kuleuven.gent.jpi127.model.User;
+import be.kuleuven.gent.jpi127.support.VolleyResponseListener;
 
 
 import org.json.JSONException;
@@ -68,7 +69,7 @@ import java.util.Map;
  *
  * @author Pelle Reyniers
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements VolleyResponseListener {
     private static final String TAG = "LoginFragment";
 
 
@@ -149,9 +150,6 @@ public class LoginFragment extends Fragment {
         mProgressView = view.findViewById(R.id.login_progress);
 
         sharedPref = getActivity().getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("lastUsedFragment",R.id.UserName);
-        editor.commit();
         StringBuilder urlBuilder = new StringBuilder();
         baseUrl=sharedPref.getString("url","http://192.168.0.178:8080/rail4you/");
         urlBuilder.append(baseUrl);
@@ -225,6 +223,8 @@ public class LoginFragment extends Fragment {
 
             changeLayout(true);
 
+            facebookLoginToServer(user);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -232,6 +232,45 @@ public class LoginFragment extends Fragment {
 
     }
 
+    private void facebookLoginToServer(User user) {
+        StringBuilder urlBuilder= new StringBuilder();
+        urlBuilder.append(baseUrl);
+        urlBuilder.append("/loginFacebook?name=");
+        urlBuilder.append(deleteSpaces(user.getName()));
+        urlBuilder.append("&id=");
+        urlBuilder.append(user.getId());
+        String url=urlBuilder.toString();
+        requestStarted();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                urlBuilder.toString(),
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        requestCompleted(response);
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        progressDialog.dismiss();
+                        //Toast.makeText(getContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private String deleteSpaces(String name) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i=0;i<name.length();i++ ){
+            if(name.charAt(i)!=' '){
+                stringBuilder.append(name.charAt(i));
+            }
+
+        }
+        return stringBuilder.toString();
+    }
 
 
     /**
@@ -490,4 +529,18 @@ public class LoginFragment extends Fragment {
         editor.commit();
     }
 
+    @Override
+    public void requestStarted() {
+        Log.d(TAG, "requestStarted: ");
+    }
+
+    @Override
+    public void requestCompleted(String response) {
+        Log.d(TAG, "requestCompleted: ");
+    }
+
+    @Override
+    public void requestEndedWithError(VolleyError error) {
+        Log.d(TAG, "requestEndedWithError: ");
+    }
 }

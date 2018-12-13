@@ -81,7 +81,7 @@ public class MainFragment extends Fragment implements VolleyResponseListener {
 
         sharedPref = getActivity().getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
 
-        baseUrl=sharedPref.getString("url","http://192.168.0.178:8080/rail4you");
+        baseUrl=sharedPref.getString("url","http://192.168.10.102:8080/rail4you");
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(baseUrl);
         urlBuilder.append("/stations");
@@ -150,6 +150,7 @@ public class MainFragment extends Fragment implements VolleyResponseListener {
         if(selectedStation!=null){
             FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
             Fragment fragment=new StationFragment();
+            selectedStation.setTotalDelay(0);
             ((StationFragment) fragment).setCredentials(selectedStation);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.screen_area,fragment);
