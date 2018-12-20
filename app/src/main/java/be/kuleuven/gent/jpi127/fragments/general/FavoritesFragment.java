@@ -1,6 +1,5 @@
-package be.kuleuven.gent.jpi127.general.fragments;
+package be.kuleuven.gent.jpi127.fragments.general;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import be.kuleuven.gent.jpi127.R;
 import be.kuleuven.gent.jpi127.model.Station;
 import be.kuleuven.gent.jpi127.support.StationAdapter;
-import be.kuleuven.gent.jpi127.support.TrainAdapter;
 import be.kuleuven.gent.jpi127.support.VolleyResponseListener;
 
 public class FavoritesFragment  extends Fragment implements VolleyResponseListener {

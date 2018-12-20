@@ -1,4 +1,4 @@
-package be.kuleuven.gent.jpi127.account;
+package be.kuleuven.gent.jpi127.fragments.account;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,7 +17,7 @@ import android.widget.Button;
 import com.facebook.login.LoginManager;
 
 import be.kuleuven.gent.jpi127.R;
-import be.kuleuven.gent.jpi127.general.fragments.MainFragment;
+import be.kuleuven.gent.jpi127.fragments.general.MainFragment;
 
 /**
  * Fragment called when a user goes to settings or user settings.

@@ -1,4 +1,4 @@
-package be.kuleuven.gent.jpi127.general.fragments;
+package be.kuleuven.gent.jpi127.fragments.general;
 
 import android.app.ProgressDialog;
 import android.content.Context;

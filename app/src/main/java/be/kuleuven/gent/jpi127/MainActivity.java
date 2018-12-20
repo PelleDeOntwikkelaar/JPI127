@@ -32,13 +32,13 @@ import com.google.gson.Gson;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import be.kuleuven.gent.jpi127.account.AccountSettingsFragment;
-import be.kuleuven.gent.jpi127.account.LoginFragment;
-import be.kuleuven.gent.jpi127.general.fragments.FavoritesFragment;
-import be.kuleuven.gent.jpi127.general.fragments.InfoFragment;
-import be.kuleuven.gent.jpi127.general.fragments.MainFragment;
-import be.kuleuven.gent.jpi127.general.fragments.OnlineFragment;
-import be.kuleuven.gent.jpi127.general.fragments.TrackedFragment;
+import be.kuleuven.gent.jpi127.fragments.account.AccountSettingsFragment;
+import be.kuleuven.gent.jpi127.fragments.account.LoginFragment;
+import be.kuleuven.gent.jpi127.fragments.general.FavoritesFragment;
+import be.kuleuven.gent.jpi127.fragments.general.InfoFragment;
+import be.kuleuven.gent.jpi127.fragments.general.MainFragment;
+import be.kuleuven.gent.jpi127.fragments.general.OnlineFragment;
+import be.kuleuven.gent.jpi127.fragments.general.TrackedFragment;
 import be.kuleuven.gent.jpi127.model.User;
 
 public class MainActivity extends AppCompatActivity

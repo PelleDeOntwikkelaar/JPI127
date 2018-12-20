@@ -1,4 +1,4 @@
-package be.kuleuven.gent.jpi127.account;
+package be.kuleuven.gent.jpi127.fragments.account;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -46,7 +46,7 @@ import com.google.gson.Gson;
 
 import be.kuleuven.gent.jpi127.MainActivity;
 import be.kuleuven.gent.jpi127.R;
-import be.kuleuven.gent.jpi127.general.fragments.MainFragment;
+import be.kuleuven.gent.jpi127.fragments.general.MainFragment;
 import be.kuleuven.gent.jpi127.support.Encryptie;
 import be.kuleuven.gent.jpi127.model.Token;
 import be.kuleuven.gent.jpi127.model.User;

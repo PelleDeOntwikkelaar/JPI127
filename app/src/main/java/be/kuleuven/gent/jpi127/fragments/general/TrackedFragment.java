@@ -1,4 +1,4 @@
-package be.kuleuven.gent.jpi127.general.fragments;
+package be.kuleuven.gent.jpi127.fragments.general;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,13 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,7 +30,6 @@ import java.util.ArrayList;
 import be.kuleuven.gent.jpi127.R;
 import be.kuleuven.gent.jpi127.model.Station;
 import be.kuleuven.gent.jpi127.support.StationAdapter;
-import be.kuleuven.gent.jpi127.support.TrainAdapter;
 import be.kuleuven.gent.jpi127.support.VolleyResponseListener;
 
 public class TrackedFragment extends Fragment implements VolleyResponseListener {

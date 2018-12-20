@@ -1,4 +1,4 @@
-package be.kuleuven.gent.jpi127.account;
+package be.kuleuven.gent.jpi127.fragments.account;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -15,16 +15,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -42,15 +39,11 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 import be.kuleuven.gent.jpi127.R;
-import be.kuleuven.gent.jpi127.general.fragments.MainFragment;
-import be.kuleuven.gent.jpi127.model.Token;
+import be.kuleuven.gent.jpi127.fragments.general.MainFragment;
 import be.kuleuven.gent.jpi127.model.User;
 import be.kuleuven.gent.jpi127.support.Encryptie;
 import be.kuleuven.gent.jpi127.support.VolleyResponseListener;

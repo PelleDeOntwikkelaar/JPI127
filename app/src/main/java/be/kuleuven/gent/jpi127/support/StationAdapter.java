@@ -14,9 +14,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.kuleuven.gent.jpi127.R;
-import be.kuleuven.gent.jpi127.general.fragments.StationFragment;
+import be.kuleuven.gent.jpi127.fragments.general.StationFragment;
 import be.kuleuven.gent.jpi127.model.Station;
-import be.kuleuven.gent.jpi127.model.Train;
 
 public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHolderProjects> {
 

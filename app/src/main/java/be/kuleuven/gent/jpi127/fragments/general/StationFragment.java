@@ -1,4 +1,4 @@
-package be.kuleuven.gent.jpi127.general.fragments;
+package be.kuleuven.gent.jpi127.fragments.general;
 
 //import com.android.volley.Response;
 import com.android.volley.Request;
@@ -8,7 +8,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,17 +32,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import be.kuleuven.gent.jpi127.R;
 import be.kuleuven.gent.jpi127.model.Station;
 import be.kuleuven.gent.jpi127.model.StationData;
 import be.kuleuven.gent.jpi127.model.Train;
 import be.kuleuven.gent.jpi127.model.User;
-import be.kuleuven.gent.jpi127.model.WResponse;
-import be.kuleuven.gent.jpi127.support.IRailApi;
-import be.kuleuven.gent.jpi127.support.NetworkClientIRail;
 import be.kuleuven.gent.jpi127.support.TrainAdapter;
 import be.kuleuven.gent.jpi127.support.VolleyResponseListener;
 
