@@ -137,6 +137,6 @@ public class TrackedFragment extends Fragment implements VolleyResponseListener 
 
     @Override
     public void requestEndedWithError(VolleyError error) {
-
+        Log.d(TAG, "requestEndedWithError: error: " + error);
     }
 }
