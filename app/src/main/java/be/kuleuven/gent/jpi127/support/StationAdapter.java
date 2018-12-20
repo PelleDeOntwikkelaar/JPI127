@@ -45,7 +45,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
     @Override
     public StationAdapter.ViewHolderProjects onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_trains,parent,false);
+                .inflate(R.layout.list_stations,parent,false);
 
         return new StationAdapter.ViewHolderProjects(v);
     }

@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         sharedPref = getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         //TODO: set dedicated ip and port number
-        editor.putString("url","http://192.168.10.112:2003/rail4you");
+        editor.putString("url","http://192.168.0.233:2003/rail4you");
         editor.commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);

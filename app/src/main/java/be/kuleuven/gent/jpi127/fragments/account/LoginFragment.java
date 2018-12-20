@@ -80,6 +80,7 @@ public class LoginFragment extends Fragment implements VolleyResponseListener {
     private ProgressDialog progressDialog;
     private View mLoginFormView;
     private LoginButton loginButton;
+    private Button registerButton;
 
     private String baseUrl;
     private String url;
@@ -153,7 +154,7 @@ public class LoginFragment extends Fragment implements VolleyResponseListener {
         StringBuilder urlBuilder = new StringBuilder();
         baseUrl=sharedPref.getString("url","http://192.168.0.178:8080/rail4you/");
         urlBuilder.append(baseUrl);
-        urlBuilder.append("login");
+        urlBuilder.append("/loginEmail");
         url=urlBuilder.toString();
 
         Log.d(TAG, "onViewCreated: url" + url);
@@ -200,9 +201,19 @@ public class LoginFragment extends Fragment implements VolleyResponseListener {
             }
         });
 
-        if(AccessToken.getCurrentAccessToken()!= null){
+        registerButton= view.findViewById(R.id.register_button);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        }
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                Fragment fragment=new RegisterFragment();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area,fragment);
+                fragmentTransaction.commit();
+            }
+        });
+
 
 
     }
@@ -371,79 +382,14 @@ public class LoginFragment extends Fragment implements VolleyResponseListener {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                                if(jsonObject.has("id")){
-                                    long id = jsonObject.getLong("id");
-                                    String name = jsonObject.getString("Name");
+                                if(jsonObject.has("user_id")){
+                                    long id = jsonObject.getLong("user_id");
+                                    String name = jsonObject.getString("name");
                                     String email = jsonObject.getString("email");
                                     User user = new User(id,name,email);
                                     commitUser(user);
 
-                                    //get token from server
-                                    StringBuilder stringBuilder = new StringBuilder();
-                                    stringBuilder.append(url);
-                                    stringBuilder.append("/token");
-                                    if (sharedPref.contains("user")){
-                                        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                                                stringBuilder.toString(),
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        try {
-                                                            JSONObject jsonObject = new JSONObject(response);
-                                                            if(jsonObject.has("token")){
-                                                                //retracting parameters from JSon object.
-                                                                String login = jsonObject.getString("loginName");
-                                                                String tokenString = jsonObject.getString("token");
-                                                                String dateString = jsonObject.getString("date");
-                                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                                                                java.util.Date parsed = null;
-                                                                try {
-                                                                    parsed = sdf.parse(dateString);
-                                                                } catch (ParseException e1) {
-                                                                    e1.printStackTrace();
-                                                                }
-                                                                Date dateSql = new Date(parsed.getTime());
-                                                                //declare a token object
-                                                                Token tokenObj = new Token(tokenString,dateSql);
-                                                                //get the User from sharedPreferences
-                                                                Gson gson = new Gson();
-                                                                String jsonUser = sharedPref.getString("user", "");
-                                                                User user = gson.fromJson(jsonUser, User.class);
-                                                                //assign token
-                                                                user.setToken(tokenObj);
-                                                                //user back to JSon
-                                                                commitUser(user);
 
-                                                            }else{
-                                                                Log.d(TAG, "onResponse: token object not valid");
-                                                            }
-
-
-                                                        } catch (JSONException e) {
-                                                            Log.d(TAG, "onResponse: JSON Exception in token getter");
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                        showProgress(false);
-                                                        Toast.makeText(getContext(),volleyError.getMessage(),Toast.LENGTH_LONG).show();
-                                                    }
-                                                }){
-                                            @Override
-                                            public Map<String, String> getHeaders() throws AuthFailureError {
-                                                Map<String, String> headers = new HashMap<String, String>();
-                                                headers.put("UserCredentials", userCredentials1);
-                                                return headers;
-                                            }
-                                        };
-
-                                        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-                                        requestQueue.add(stringRequest);
-
-                                    }
                                     changeLayout(true);
 
 

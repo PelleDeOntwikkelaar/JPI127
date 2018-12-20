@@ -101,7 +101,6 @@ public class StationFragment extends Fragment implements VolleyResponseListener 
 
         baseUrl=sharedPref.getString("url","http://192.168.0.178:8080/rail4you/");
         urlBuilder.append(baseUrl);
-        urlBuilder.append("/getFavorites");
         url=urlBuilder.toString();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.trains_recyclerview);
@@ -116,6 +115,10 @@ public class StationFragment extends Fragment implements VolleyResponseListener 
         dalTextView = (TextView) view.findViewById(R.id.textViewDal);
         favoritButton =(Button) view.findViewById(R.id.button_favorit);
         trackSwitch = (Switch) view.findViewById(R.id.switch_track);
+
+        Gson gson = new Gson();
+        String json = sharedPref.getString("user", "");
+        user = gson.fromJson(json, User.class);
 
         trains= new ArrayList<>();
 
@@ -134,7 +137,7 @@ public class StationFragment extends Fragment implements VolleyResponseListener 
         favoritButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isFavorit && checkForUser()){
+                if(!isFavorit && checkForUser()){
                     addToFavorit();
                     favoritButton.setVisibility(View.INVISIBLE);
                 }
@@ -151,6 +154,7 @@ public class StationFragment extends Fragment implements VolleyResponseListener 
         urlBuilder.append(station.getUri());
         urlBuilder.append("&userId=");
         urlBuilder.append(user.getId());
+        Log.d(TAG, "addToFavorit: url" +urlBuilder.toString());
         requestStarted();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 urlBuilder.toString(),
@@ -186,7 +190,7 @@ public class StationFragment extends Fragment implements VolleyResponseListener 
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(baseUrl);
         urlBuilder.append("/addToTracked");
-        urlBuilder.append("?stationCode=");
+        urlBuilder.append("?stationID=");
         urlBuilder.append(station.getUri());
         requestStarted();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
@@ -265,31 +269,38 @@ public class StationFragment extends Fragment implements VolleyResponseListener 
     }
 
     private void loadFavorite() {
-        requestNumber=2;
-        StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append(baseUrl);
-        urlBuilder.append("/isFavorit");
-        urlBuilder.append("?stationCode=");
-        urlBuilder.append(station.getUri());
-        requestStarted();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                urlBuilder.toString(),
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        requestCompleted(response);
-                    }
-                },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
-    }
+        if(!checkForUser()){
+            favoritButton.setVisibility(View.INVISIBLE);
+        }else{
+            requestNumber=2;
+            StringBuilder urlBuilder = new StringBuilder();
+            urlBuilder.append(baseUrl);
+            urlBuilder.append("/isFavorit");
+            urlBuilder.append("?stationCode=");
+            urlBuilder.append(station.getUri());
+            urlBuilder.append("&userId=");
+            urlBuilder.append(user.getId());
+            Log.d(TAG, "loadFavorite: url" + urlBuilder.toString());
+            requestStarted();
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                    urlBuilder.toString(),
+                    new com.android.volley.Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            requestCompleted(response);
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Toast.makeText(getContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            requestQueue.add(stringRequest);
+        }
 
+    }
 
 
 
@@ -303,14 +314,10 @@ public class StationFragment extends Fragment implements VolleyResponseListener 
     public void requestCompleted(String response) {
 
         if(requestNumber==2){
-            try {
-                JSONObject jsonObject=new JSONObject(response);
-                isFavorit=jsonObject.getBoolean("isFavorit");
-                if(isFavorit){
-                    favoritButton.setVisibility(View.INVISIBLE);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if(response.equals("TRUE"))isFavorit=true;
+            else isFavorit=false;
+            if(isFavorit){
+                favoritButton.setVisibility(View.INVISIBLE);
             }
 
         } else if(requestNumber==1){

@@ -100,7 +100,7 @@ public class RegisterFragment extends Fragment implements VolleyResponseListener
         baseUrl=sharedPref.getString("url","http://192.168.0.178:8080/rail4you/");
         urlBuilder.append(baseUrl);
         //todo: correct url en register fragment afwerken
-        urlBuilder.append("registeremail");
+        urlBuilder.append("/addMail");
         url=urlBuilder.toString();
 
         Log.d(TAG, "onViewCreated: url" + url);
@@ -182,9 +182,9 @@ public class RegisterFragment extends Fragment implements VolleyResponseListener
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if(jsonObject.has("id")){
-                                long id = jsonObject.getLong("id");
-                                String name = jsonObject.getString("Name");
+                            if(jsonObject.has("user_id")){
+                                long id = jsonObject.getLong("user_id");
+                                String name = jsonObject.getString("name");
                                 String email = jsonObject.getString("email");
                                 User user = new User(id,name,email);
                                 commitUser(user);

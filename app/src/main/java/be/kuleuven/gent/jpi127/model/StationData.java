@@ -19,7 +19,7 @@ public class StationData {
     public StationData(JSONObject jsonObject){
         try {
             stationCode=jsonObject.getString("stationuri");
-            commDelay=jsonObject.getInt("average_delay");
+            commDelay=jsonObject.getInt("avg_delay");
             piek=jsonObject.getInt("max_delay");
             dal=jsonObject.getInt("min_delay");
         } catch (JSONException e) {

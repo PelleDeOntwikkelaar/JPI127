@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 
 import be.kuleuven.gent.jpi127.R;
 import be.kuleuven.gent.jpi127.model.Station;
+import be.kuleuven.gent.jpi127.model.User;
 import be.kuleuven.gent.jpi127.support.StationAdapter;
 import be.kuleuven.gent.jpi127.support.VolleyResponseListener;
 
@@ -61,9 +63,7 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         sharedPref = getActivity().getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("lastUsedFragment",R.id.FavoritesMI);
-        editor.commit();
+
         StringBuilder urlBuilder = new StringBuilder();
 
         baseUrl=sharedPref.getString("url","http://192.168.0.178:8080/rail4you/");
@@ -87,9 +87,16 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
 
         requestStarted();
         volleyNumber=1;
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder.append(url);
+        urlBuilder.append("?userID=");
+        Gson gson = new Gson();
+        String json = sharedPref.getString("user", "");
+        User user = gson.fromJson(json, User.class);
+        urlBuilder.append(user.getId());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                url,
+                urlBuilder.toString(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -110,7 +117,7 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
 
     private void loadStations() {
         volleyNumber=2;
-        url = baseUrl.concat("/getStations");
+        url = baseUrl.concat("/stations");
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 url,
                 new Response.Listener<String>() {
@@ -132,6 +139,14 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
 
     }
 
+    private boolean checkForid(String uri){
+        for(String uricode:stationCodes){
+            if(uricode.equals(uri))return true;
+        }
+
+        return false;
+    }
+
     @Override
     public void requestStarted() {
         Log.d(TAG, "requestStarted: url: " + url);
@@ -150,16 +165,18 @@ public class FavoritesFragment  extends Fragment implements VolleyResponseListen
                     stationCodes.add(jsonObject.getString("station_uri"));
                 }
                 loadStations();
-                volleyNumber=0;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }else if (volleyNumber==2){
             try {
                 JSONArray jsonArray=new JSONArray(response);
+
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject jsonObject=jsonArray.getJSONObject(i);
-                    stations.add(new Station(jsonObject));
+                    Station station =new Station(jsonObject);
+                    if(checkForid(station.getUri()))stations.add(station);
+
                 }
                 adapter = new StationAdapter(stations,context,getActivity().getSupportFragmentManager());
                 recyclerView.setAdapter(adapter);
