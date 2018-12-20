@@ -3,6 +3,7 @@ package be.kuleuven.gent.jpi127.support;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.kuleuven.gent.jpi127.R;
+import be.kuleuven.gent.jpi127.general.fragments.StationFragment;
 import be.kuleuven.gent.jpi127.model.Station;
 import be.kuleuven.gent.jpi127.model.Train;
 
@@ -65,9 +67,12 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo: open station fragment
-
-                //.getContext();
+                Fragment fragment=new StationFragment();
+                station.setTotalDelay(0);
+                ((StationFragment) fragment).setCredentials(station);
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area,fragment);
+                fragmentTransaction.commit();
             }
         });
     }
