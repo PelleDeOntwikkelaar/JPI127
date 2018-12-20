@@ -60,6 +60,7 @@ public class RegisterFragment extends Fragment implements VolleyResponseListener
 
 
     // UI references.
+    private EditText mNameView;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private EditText mPasswordRepeatView;
@@ -85,6 +86,7 @@ public class RegisterFragment extends Fragment implements VolleyResponseListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mEmailView = (AutoCompleteTextView) view.findViewById(R.id.register_email);
+        mNameView = (EditText) view.findViewById(R.id.register_name);
 
         mPasswordView = (EditText) view.findViewById(R.id.register_password);
         mPasswordRepeatView = (EditText) view.findViewById(R.id.register_password_repeat);
@@ -178,7 +180,8 @@ public class RegisterFragment extends Fragment implements VolleyResponseListener
         final String userCredentials1 = userCredentials;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(url);
-
+        stringBuilder.append("?name=");
+        stringBuilder.append(mNameView.getText().toString());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 stringBuilder.toString(),
                 new Response.Listener<String>() {

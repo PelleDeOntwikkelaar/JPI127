@@ -24,12 +24,22 @@
     <string name="defaultEmail">android.studio@android.com</string>
     <string name="userName">userName</string>
     <string name="userID">userId</string>
-    <string name="title_activity_project2">Map</string>
-    <string name="MetingenTitleProjectOverview"> Measurements </string>
+
+    <string name="info">This application is develloped with love and great care by Wouter Legiest and Pelle Reyniers.
+        The inspiration for this application can be found in many frustrating moments.
+        Beside the frustrating moments was there the interest in third party apis that contain a lot of usefull data.
+        The actual goal of this goes much further than what we achieved in this project:
+        we believe it is possible to scrape the api in a search for trains with a delay greater than 30 mins.
+        If you have a train subscription, it can be possible to search for late trains and let the application file a complaint.
+    </string>
+
+
 
 
     <!-- Strings related to login -->
     <string name="prompt_email">Username</string>
+    <string name="prompt_emailR">Email</string>
+    <string name="prompt_name">Name</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Log in</string>
     <string name="action_register">Register</string>
