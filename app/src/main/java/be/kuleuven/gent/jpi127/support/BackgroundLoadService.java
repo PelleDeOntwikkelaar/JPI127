@@ -23,6 +23,7 @@ public class BackgroundLoadService extends IntentService {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             // Restore interrupt status.
+
             Thread.currentThread().interrupt();
         }
     }
