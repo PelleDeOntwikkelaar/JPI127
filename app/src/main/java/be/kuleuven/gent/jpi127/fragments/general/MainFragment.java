@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import be.kuleuven.gent.jpi127.R;
 import be.kuleuven.gent.jpi127.model.Station;
@@ -81,7 +82,7 @@ public class MainFragment extends Fragment implements VolleyResponseListener {
 
         sharedPref = getActivity().getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
 
-        baseUrl=sharedPref.getString("url","http://192.168.10.102:8080/rail4you");
+        baseUrl=sharedPref.getString("url","http://10.108.168.254:8080/rail4you");
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(baseUrl);
         urlBuilder.append("/stations");
@@ -158,6 +159,13 @@ public class MainFragment extends Fragment implements VolleyResponseListener {
         }
     }
 
+    public void fillList(List<String> names){
+        nameList= names.toArray(new String[0]);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, nameList);
+        autoCompleteTextView.setAdapter(adapter);
+    }
+
     @Override
     public void requestStarted() {
         Log.d(TAG, "requestStarted: load stations started at url: " + url);
@@ -176,10 +184,7 @@ public class MainFragment extends Fragment implements VolleyResponseListener {
                 stations.add(station);
             }
 
-            nameList= names.toArray(new String[0]);
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, nameList);
-            autoCompleteTextView.setAdapter(adapter);
+            fillList(names);
 
 
         } catch (JSONException e) {

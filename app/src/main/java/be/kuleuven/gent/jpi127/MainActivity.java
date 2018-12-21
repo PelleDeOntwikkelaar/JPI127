@@ -1,5 +1,6 @@
 package be.kuleuven.gent.jpi127;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +32,8 @@ import com.google.gson.Gson;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import be.kuleuven.gent.jpi127.fragments.account.AccountSettingsFragment;
 import be.kuleuven.gent.jpi127.fragments.account.LoginFragment;
@@ -40,6 +43,7 @@ import be.kuleuven.gent.jpi127.fragments.general.MainFragment;
 import be.kuleuven.gent.jpi127.fragments.general.OnlineFragment;
 import be.kuleuven.gent.jpi127.fragments.general.TrackedFragment;
 import be.kuleuven.gent.jpi127.model.User;
+import be.kuleuven.gent.jpi127.support.DownloadService;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity
 
     public FragmentManager fragmentManager;
     private Fragment fragment;
+    private MainFragment mainFragment;
     private Bundle bundle;
     private Boolean loggedIn;
     private ImageView profilePicture;
@@ -59,6 +64,19 @@ public class MainActivity extends AppCompatActivity
 
 
     CallbackManager callbackManager;
+
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                List<String> names = bundle.getStringArrayList("result");
+                mainFragment.fillList(names);
+            }
+        }
+    };
 
 
     @Override
@@ -88,11 +106,14 @@ public class MainActivity extends AppCompatActivity
         //login value
         loggedIn=false;
 
+        mainFragment=new MainFragment();
+
         //set shared prefs for use in application
         sharedPref = getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         //TODO: set dedicated ip and port number
-        editor.putString("url","http://192.168.0.233:2003/rail4you");
+        String url="http://192.168.10.101:2003/rail4you";
+        editor.putString("url",url);
         editor.commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
@@ -117,6 +138,15 @@ public class MainActivity extends AppCompatActivity
         };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        Intent intent = new Intent(this, DownloadService.class);
+        // add infos for the service which file to download and where to store
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(url);
+        stringBuilder.append("/stations");
+        intent.putExtra("urlpath", url);
+
+        startService(intent);
 
         //navigation header initialisatie
         profilePicture = (ImageView) headerView.findViewById(R.id.profilePicture);
@@ -243,7 +273,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment=new MainFragment();
 
         if (id == R.id.NewSearchMI) {
-            fragment = new MainFragment();
+            fragment = mainFragment;
 
         } else if (id == R.id.FavoritesMI) {
             if (sharedPref.contains("user")){
